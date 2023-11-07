@@ -53,4 +53,5 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator):
         self._check_params(X)
         random_state = check_random_state(self.random_state)
     
+        print(random_state)
    
