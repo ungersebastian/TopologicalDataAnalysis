@@ -1,55 +1,81 @@
 # -*- coding: utf-8 -*-
 """
-hyPirana is a program for analysis of PiFM hyPIR spectra acquired using VistaScan
-Created on Fri Apr 24 08:06:26 2020
-
+A Python implementation of the topological data analysis clustering method.
 @author: ungersebastian
-
-Last modified on Fri Oct 16 by Daniela Taeuber for application to the spectral range of one tuner only
-Modified by Maryam Ali to work on multiple datasets 
 """
+
+#%%
+quit()
 
 #%% imports & parameters
 
-import hyPIRana as ir
-
 from os.path import join
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from datetime import datetime
+
+path_dir = os.path.dirname(os.path.abspath(__file__))
+spc_in = np.load(join(path_dir, 'tda', 'resources', 'raman.npy'))
+
+shape_im = spc_in.shape[:2]
+n_wl = spc_in.shape[-1]
+
+spc_train = np.reshape(spc_in, (np.prod(shape_im), n_wl))
+
+from tda import tda
+tda = tda()
+tda.fit(spc_train)
+#plt.figure()
+#plt.imshow(np.sum(my_spc, axis = -1))
+#%%
+
+
+#%%
+
 
 #%% generate absolute paths of ressource data
 
 path_dir = os.path.dirname(os.path.abspath(__file__))
 
-path_import33 = r'hyPIRana\resources\Retina\Ret240033'
+path_import = r'tda\resources\Ret240033'
+headerfile = 'Ret240033.txt'
+
+path_final = join(path_dir, path_import)
+
+
+#%%
+
+path_dir = os.path.dirname(os.path.abspath(__file__))
+
+path_import33 = r'tda\resources\Ret240033'
 headerfile33 = 'Ret240033.txt'
 
-path_import20 = r'hyPIRana\resources\Retina\Ret240020'
+path_import20 = r'tda\resources\Ret240020'
 headerfile20 = 'Ret240020.txt'
 
-path_import12 = r'hyPIRana\resources\Retina\Ret240012'
+path_import12 = r'tda\resources\Ret240012'
 headerfile12 = 'Ret240012.txt'
 
 path_final33 = join(path_dir, path_import33)
 path_final20 = join(path_dir, path_import20)
 path_final12 = join(path_dir, path_import12)
 
-today = datetime.strftime(datetime.now(), "%Y%m%d")
-
-save_path = join(path_dir, 'export')
 
 #%% loads data and plots associated VistaScan parameter images
 
-my_data12 = ir.pifm_image(path_final12, headerfile12) 
-my_data20 = ir.pifm_image(path_final20, headerfile20) 
-my_data33 = ir.pifm_image(path_final33, headerfile33) 
+my_data12 = tda.pifm_image(path_final12, headerfile12) 
+my_data20 = tda.pifm_image(path_final20, headerfile20) 
+my_data33 = tda.pifm_image(path_final33, headerfile33) 
 
 my_data12.plot_all()
 my_data20.plot_all()
 my_data33.plot_all()
+
+#%% loads data and plots associated VistaScan parameter images
+
+my_data = tda.pifm_image(path_final, headerfile) 
+
+my_data.plot_all()
 
 #%% Calibration using CaF
 
