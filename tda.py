@@ -12,7 +12,8 @@ import numpy as np
 
 class tda(TransformerMixin, ClusterMixin, BaseEstimator):
     @_deprecate_positional_args
-    def __init__(self, n_clusters=8, *, lens_function = 'PCA', copy_x=True, random_state=None):
+    def __init__(self, *, lens_function = 'PCA', copy_x=True, random_state=None):
+        self.n_clusters = None
         self.lens_function = lens_function
         self.copy_x = copy_x
         self.random_state = random_state
@@ -52,6 +53,13 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator):
         
         self._check_params(X)
         random_state = check_random_state(self.random_state)
+        
+        # Step 1: Create Lens
+        # Step 2: Choose Resolotion, Gain: Create Subsets
+        # Step 3: Choose Metric, Clustering Method: Cluster Analysis on subsets
+        # Step 4: Create (weighted) network
+        # Step 5: Cluster Analysis on the network
+        # Step 6: Create soft/hard clustering
     
-        print(random_state)
+        return self
    

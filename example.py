@@ -15,7 +15,6 @@ import matplotlib.pyplot as plt
 import os
 
 path_dir = os.path.dirname(os.path.abspath(__file__))
-print(path_dir)
 spc_in = np.load(join(path_dir, 'resources', 'raman.npy'))
 
 shape_im = spc_in.shape[:2]
