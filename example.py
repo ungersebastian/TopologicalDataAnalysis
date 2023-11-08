@@ -7,6 +7,7 @@ A Python implementation of the topological data analysis clustering method.
 #%%
 quit()
 
+
 #%% imports & parameters
 
 from os.path import join
@@ -14,25 +15,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+from TopologicalDataAnalysis.tda import tda
+
 path_dir = os.path.dirname(os.path.abspath(__file__))
-spc_in = np.load(join(path_dir, 'resources', 'raman.npy'))
+spc_in = np.load(join(path_dir, 'TopologicalDataAnalysis', 'resources', 'raman.npy'))
 
 shape_im = spc_in.shape[:2]
 n_wl = spc_in.shape[-1]
 
 spc_train = np.reshape(spc_in, (np.prod(shape_im), n_wl))
 
-from tda import tda
 tda = tda()
 tda.fit(spc_train)
-#plt.figure()
-#plt.imshow(np.sum(my_spc, axis = -1))
 
 plt.figure()
 plt.imshow(np.reshape(tda.lens.values, shape_im))
-#%%
-
-
 #%%
 
 

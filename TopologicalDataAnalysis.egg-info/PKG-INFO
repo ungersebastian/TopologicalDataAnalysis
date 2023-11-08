@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: TopologicalDataAnalysis
+Version: 0.1
+Summary: Compute tda clustering.
+Home-page: UNKNOWN
+Author: Sebastian Unger
+Author-email: basti.unger@googlemail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Topological-Data-Analysis
+A Python implementation of the topological data analysis clustering method
+
+

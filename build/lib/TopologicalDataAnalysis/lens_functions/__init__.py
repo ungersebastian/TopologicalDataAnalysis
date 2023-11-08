@@ -9,6 +9,4 @@ Created on Tue Apr 28 20:43:57 2020
 import numpy as np;
 
 # modules
-from .tda import tda;
-from ._lens import _lens;
-from ._utils import *;
+from .pca import pca;
