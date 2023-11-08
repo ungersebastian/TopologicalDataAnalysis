@@ -9,12 +9,18 @@ from sklearn.base import BaseEstimator, ClusterMixin, TransformerMixin
 from sklearn.utils.validation import _deprecate_positional_args
 from sklearn.utils import check_random_state
 import numpy as np
+from __lens__ import __lens__
 
 class tda(TransformerMixin, ClusterMixin, BaseEstimator):
     @_deprecate_positional_args
-    def __init__(self, *, lens_function = 'PCA', copy_x=True, random_state=None):
+    def __init__(self, *, 
+                 lens_function = 'PCA', lens_axis = 1,
+                 copy_x=True, random_state=None):
         self.n_clusters = None
+        
         self.lens_function = lens_function
+        self.lens_axis = lens_axis
+        
         self.copy_x = copy_x
         self.random_state = random_state
     
@@ -46,15 +52,18 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator):
             Fitted estimator.
         """
         
-        X = self._validate_data(X, accept_sparse='csr',
+        self.X = self._validate_data(X, accept_sparse='csr',
                                 dtype=[np.float64, np.float32],
                                 order='C', copy=self.copy_x,
                                 accept_large_sparse=False)
         
-        self._check_params(X)
+        self._check_params(self.X)
         random_state = check_random_state(self.random_state)
         
         # Step 1: Create Lens
+        
+        self.lens = __lens__(self)
+        
         # Step 2: Choose Resolotion, Gain: Create Subsets
         # Step 3: Choose Metric, Clustering Method: Cluster Analysis on subsets
         # Step 4: Create (weighted) network

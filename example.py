@@ -27,6 +27,9 @@ tda = tda()
 tda.fit(spc_train)
 #plt.figure()
 #plt.imshow(np.sum(my_spc, axis = -1))
+
+plt.figure()
+plt.imshow(np.reshape(tda.lens.values, shape_im))
 #%%
 
 
