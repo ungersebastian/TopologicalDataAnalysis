@@ -15,5 +15,7 @@ class _lens(object):
         self.lens_function = parent.lens_function
         
         if self.lens_function == 'PCA':
-            self.values, self.predict = pca(self.parent.X)
+            self._lens = pca(self)
+            self.values = self._lens.values
+            self.predict = self._lens.predict
         

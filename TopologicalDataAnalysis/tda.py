@@ -15,7 +15,9 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator):
     @_deprecate_positional_args
     def __init__(self, *, 
                  lens_function = 'PCA', lens_axis = 1,
-                 copy_x=True, random_state=None):
+                 copy_x=True, random_state=None,
+                 **kwargs
+                 ):
         self.n_clusters = None
         
         self.lens_function = lens_function

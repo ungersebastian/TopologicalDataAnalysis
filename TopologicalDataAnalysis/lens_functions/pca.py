@@ -6,16 +6,27 @@ Created on Wed Nov  8 13:14:41 2023
 """
 from sklearn.decomposition import PCA
 
-import numpy as np
-
 from .._utils import norm, center, apply_norm
 
-def pca(X):
-    pca = PCA(n_components=1)
+class pca(object):
+    def __init__(self, parent):
+        super(pca, self).__init__()
+        
+        self.parent = parent
+        my_X = self.parent.parent.X
+        
+        pca_fun = PCA(n_components=1)
+        my_X = apply_norm(my_X, norm(my_X, 2))
+        my_X = center(my_X)
+        
+        pca_fun.fit(my_X)
+        
+        self.values = pca_fun.transform(my_X)
+        self.predict = pca_fun.transform
     
-    my_X = apply_norm(X, norm(X, 2))
-    my_X = center(my_X)
     
-    pca.fit(my_X)
     
-    return pca.transform(my_X), pca.transform
+    
+    
+    
+    
