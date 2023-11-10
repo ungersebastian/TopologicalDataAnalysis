@@ -8,15 +8,18 @@ A Python implementation of the topological data analysis clustering method.
 quit()
 
 
-#%% imports & parameters
+#%% Examaple on Raman hyperspectral map
 
+### imports of standard libs
 from os.path import join
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+### import of the tda package
 from TopologicalDataAnalysis.tda import tda
 
+### Import of training data
 path_dir = os.path.dirname(os.path.abspath(__file__))
 spc_in = np.load(join(path_dir, 'TopologicalDataAnalysis', 'resources', 'raman.npy'))
 
@@ -25,7 +28,10 @@ n_wl = spc_in.shape[-1]
 
 spc_train = np.reshape(spc_in, (np.prod(shape_im), n_wl))
 
-tda = tda()
+### initialize tda
+tda = tda(
+    lens_function = 'PCA', lens_axis = 0, lens_norm = 2
+    )
 tda.fit(spc_train)
 
 plt.figure()

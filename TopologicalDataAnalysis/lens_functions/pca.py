@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov  8 13:14:41 2023
-
 @author: basti
 """
 from sklearn.decomposition import PCA
@@ -13,17 +11,47 @@ class pca(object):
         super(pca, self).__init__()
         
         self.parent = parent
+        self.parameter = self.parent.parameter
+        
         my_X = self.parent.parent.X
         
-        pca_fun = PCA(n_components=1)
-        my_X = apply_norm(my_X, norm(my_X, 2))
-        my_X = center(my_X)
+        self.n_components = self.parameter['lens_axis']+1
+        self.norm = self.parameter['lens_norm']
+        self.center = self.parameter['lens_center']
+        self.component = self.parameter['lens_axis']
         
-        pca_fun.fit(my_X)
+        self.pca_fun = PCA(n_components=self.n_components)
         
-        self.values = pca_fun.transform(my_X)
-        self.predict = pca_fun.transform
+        if not isinstance(self.norm, type(None)):
+            my_X = apply_norm(my_X, norm(my_X, self.norm))
+            
+        self.mean = None
+        if self.center:
+            my_X, self.mean = center(my_X)
+        
+        self.pca_fun.fit(my_X)
+        
+        if self.component == 0:
+             self.values = self.pca_fun.transform(my_X)
+        else:
+             self.values = self.pca_fun.transform(my_X)[:, self.component]
+             
     
+    def predict(self, X):
+        my_X = X.__copy__()
+        if not isinstance(self.norm, type(None)):
+            my_X = apply_norm(my_X, norm(my_X, self.norm))
+        
+        if self.center:
+            my_X, _ = center(my_X, self.mean)
+        
+        if self.component == 0:
+             return self.pca_fun.transform(my_X)
+        else:
+             return self.pca_fun.transform(my_X)[:, self.component]
+        
+        
+        
     
     
     

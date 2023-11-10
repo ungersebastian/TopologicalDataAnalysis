@@ -11,4 +11,5 @@ import numpy as np;
 # modules
 from .tda import tda;
 from ._lens import _lens;
+from ._parameter import _parameter;
 from ._utils import *;

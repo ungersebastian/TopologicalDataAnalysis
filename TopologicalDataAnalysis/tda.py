@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""K-means clustering"""
+"""TDA clustering"""
 # Authors: Sebastian Unger <basti.unger@googlemail.com>
 # License: pending
 
@@ -10,21 +10,57 @@ from sklearn.utils.validation import _deprecate_positional_args
 from sklearn.utils import check_random_state
 import numpy as np
 from ._lens import _lens
+from ._parameter import _parameter
 
 class tda(TransformerMixin, ClusterMixin, BaseEstimator):
     @_deprecate_positional_args
     def __init__(self, *, 
-                 lens_function = 'PCA', lens_axis = 1,
                  copy_x=True, random_state=None,
                  **kwargs
                  ):
+        self.parameter = _parameter(self, **kwargs)
+        
         self.n_clusters = None
-        
-        self.lens_function = lens_function
-        self.lens_axis = lens_axis
-        
+                        
         self.copy_x = copy_x
         self.random_state = random_state
+    
+    #######################################################################
+    # the following will allow the usage of the _parameter class to store #
+    # all the parameters for computation                                  #
+    #######################################################################
+    
+    def __getattr__(self, key):
+        if key in list(object.__getattribute__(self, 'parameter').keys()):
+            return object.__getattribute__(self, 'parameter')[key]
+        else:
+            return object.__getattribute__(self, key)
+        
+    def __setattr__(self, key, value):
+        if key == 'parameter':
+            object.__setattr__(self, key, value)
+        elif key in list(object.__getattribute__(self, 'parameter').keys()):
+            self.parameter[key] = value
+        else:
+            object.__setattr__(self, key, value)
+    
+    def __hasattr__(self, key):
+        if key in list(object.__getattribute__(self, 'parameter').keys()):
+            return True
+        else:
+            return object.__hasattr__(self, key)
+    
+    def __delattr__(self, key):
+        if key in list(object.__getattribute__(self, 'parameter').keys()):
+            print('Parameter can´t be removed!')
+            return None
+        else:
+            return object.__delattr__(self, key)
+        
+    #######################################################################
+    # tda code starts here                                                #
+    #                                                                     #
+    #######################################################################    
     
     def _check_params(self, X):
         # future: check constraints on X
