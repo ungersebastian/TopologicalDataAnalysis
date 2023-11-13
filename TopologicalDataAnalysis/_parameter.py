@@ -9,10 +9,20 @@ class _parameter(dict):
         
         self.parent = parent
         
+        # lens parameter
         self.add('lens_function', 'PCA')
         self.add('lens_norm', 2)
         self.add('lens_axis', 0)
         self.add('lens_center', True)
+        
+        # lens sectioning
+        self.add('resolution', 30)
+        self.add('gain', 4)
+        
+        # subset clustering
+        self.add('cluster_function', 'linkage')
+        self.add('cluster_metric', 'cosine') # euclidean, seuclidean, correlation, cosine)
+        self.add('cluster_method', 'single') # Linkage: single, complete, ward)
         
         # check kwargs
         self.update(**kwargs)
@@ -31,3 +41,5 @@ class _parameter(dict):
         pass
     def save(self):
         pass
+    
+    

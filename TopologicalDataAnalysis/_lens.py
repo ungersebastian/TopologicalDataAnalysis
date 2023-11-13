@@ -3,14 +3,15 @@
 @author: basti
 """
 
+from ._tda_child_class import tda_child
+
 from .lens_functions.pca import pca
 
-class _lens(object):
+class _lens(tda_child):
     def __init__(self, parent):
-        super(_lens, self).__init__()
+        super(tda_child, self).__init__()
+        self.parameter = parent.parameter
         self.parent = parent
-        
-        self.parameter = self.parent.parameter
         
         self.lens_function = parent.lens_function
         

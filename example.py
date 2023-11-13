@@ -30,7 +30,8 @@ spc_train = np.reshape(spc_in, (np.prod(shape_im), n_wl))
 
 ### initialize tda
 tda = tda(
-    lens_function = 'PCA', lens_axis = 0, lens_norm = 2
+    lens_function = 'PCA', lens_axis = 0, lens_norm = 2,
+    resolution = 3, gain = 4
     )
 tda.fit(spc_train)
 

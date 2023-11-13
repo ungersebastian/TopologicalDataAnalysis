@@ -2,16 +2,19 @@
 """
 @author: basti
 """
-from sklearn.decomposition import PCA
 
+from .._tda_child_class import tda_child
 from .._utils import norm, center, apply_norm
 
-class pca(object):
+
+from sklearn.decomposition import PCA
+
+class pca(tda_child):
     def __init__(self, parent):
-        super(pca, self).__init__()
-        
+        super(tda_child, self).__init__()
+        self.parameter = parent.parameter
         self.parent = parent
-        self.parameter = self.parent.parameter
+        
         
         my_X = self.parent.parent.X
         
