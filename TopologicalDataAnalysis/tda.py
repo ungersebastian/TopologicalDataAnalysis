@@ -11,6 +11,7 @@ from sklearn.utils import check_random_state
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import community as community_louvain #pip install python-louvain
 from ._tda_child_class import tda_child
 from ._lens import _lens
@@ -184,7 +185,7 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator, tda_child):
         
         self.n_nodes = self.n_nodes-n_rm
         
-    def fit_4(self):
+    def fit_5(self):
         self.partition = community_louvain.best_partition(self.topograph, weight = 'height')
         
     def draw_network(self):
@@ -192,11 +193,18 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator, tda_child):
         fig = plt.figure()
         title = 'TOPO - unweighted'
         fig.canvas.set_window_title(title)
-        nx.draw_networkx_nodes(self.topograph, pos_topo, node_size=1)
-        nx.draw_networkx_edges(self.topograph, pos_topo, alpha=0.4)
+        nx.draw_networkx_nodes(self.topograph, self.pos_topo, node_size=1)
+        nx.draw_networkx_edges(self.topograph, self.pos_topo, alpha=0.4)
         
-        plt.scatter(*np.transpose(np.array(list(pos_topo.values()))), c = list(nx.get_node_attributes(self.topograph, 'height').values()))
+        plt.scatter(*np.transpose(np.array(list(self.pos_topo.values()))), c = list(nx.get_node_attributes(self.topograph, 'height').values()))
         plt.title(title)
         plt.show()
-            
+    
+    def draw_cluster_network(self):
+        plt.figure()
+        nx.draw_networkx_nodes(self.topograph, self.pos_topo, self.partition.keys(), node_size=10,
+                               cmap = cm.get_cmap('hsv', max(self.partition.values()) + 1), node_color=list(self.partition.values()))
+        
+        nx.draw_networkx_edges(self.topograph, self.pos_topo, alpha=0.4)
+        plt.show()
    
