@@ -3,7 +3,10 @@ README.md
 setup.cfg
 setup.py
 TopologicalDataAnalysis/__init__.py
+TopologicalDataAnalysis/_cluster.py
 TopologicalDataAnalysis/_lens.py
+TopologicalDataAnalysis/_parameter.py
+TopologicalDataAnalysis/_tda_child_class.py
 TopologicalDataAnalysis/_utils.py
 TopologicalDataAnalysis/tda.py
 TopologicalDataAnalysis.egg-info/PKG-INFO
@@ -11,6 +14,8 @@ TopologicalDataAnalysis.egg-info/SOURCES.txt
 TopologicalDataAnalysis.egg-info/dependency_links.txt
 TopologicalDataAnalysis.egg-info/requires.txt
 TopologicalDataAnalysis.egg-info/top_level.txt
+TopologicalDataAnalysis/cluster_functions/__init__.py
+TopologicalDataAnalysis/cluster_functions/linkage.py
 TopologicalDataAnalysis/lens_functions/__init__.py
 TopologicalDataAnalysis/lens_functions/pca.py
 TopologicalDataAnalysis/resources/__init__.py

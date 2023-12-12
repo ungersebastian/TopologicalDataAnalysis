@@ -152,7 +152,7 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator, tda_child):
                 my_lens = values[lens_select]
                 
                 ## perform clustering
-                new_nodes = self.f_cluster.cluster.cluster(my_id, my_data, my_lens)
+                new_nodes = self.f_cluster.cluster.cluster(my_data)
                 
                 for i_c in np.unique(new_nodes):
                     id_list = my_id[new_nodes==i_c]

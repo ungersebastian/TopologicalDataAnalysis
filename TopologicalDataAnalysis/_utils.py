@@ -35,4 +35,4 @@ def center(X, mean = None):
 
 def apply_norm(X, norm):
     return np.array([d/n if n > 0 else np.zeros(len(d)) for d, n in zip(X, norm)])
-    
+

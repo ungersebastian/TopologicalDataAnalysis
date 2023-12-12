@@ -28,11 +28,12 @@ n_wl = spc_in.shape[-1]
 
 spc_train = np.reshape(spc_in, (np.prod(shape_im), n_wl))
 
+#%%
 ### initialize tda
 tda = tda(
-    lens_function = 'PCA', lens_axis = 1, lens_norm = 2,
+    lens_function = 'PCA', lens_axis = 0, lens_norm = 2,
     resolution = 70, gain = 4,
-    cluster_function = 'linkage', cluster_metric = 'cosine', cluster_method = 'average', cluster_tmax_rel = 0.2
+    cluster_function = 'kmeans', cluster_metric = 'cosine', cluster_method = 'average', cluster_t = 4
     )
 c = tda.fit(spc_train)
 

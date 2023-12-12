@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = empty-project-type
-recent_files = ['example.py', 'TopologicalDataAnalysis\\old_files\\tda_pifm.py', 'TopologicalDataAnalysis\\tda.py', 'TopologicalDataAnalysis\\_tda_child_class.py', 'TopologicalDataAnalysis\\cluster_functions\\linkage.py', 'TopologicalDataAnalysis\\_parameter.py', 'C:\\Users\\basti\\.conda\\envs\\savu\\Lib\\site-packages\\sklearn\\utils\\__init__.py', 'C:\\Users\\basti\\.conda\\envs\\savu\\Lib\\site-packages\\sklearn\\utils\\validation.py']
+recent_files = ['example.py', 'bacterial_clustering.py', 'TopologicalDataAnalysis\\_utils.py', 'TopologicalDataAnalysis\\__init__.py']
 
 [main]
 version = 0.2.0

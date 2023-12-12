@@ -21,12 +21,21 @@ class _parameter(dict):
         
         # subset clustering
         self.add('cluster_function', 'linkage')
+        
         self.add('cluster_metric', 'cosine') # euclidean, seuclidean, correlation, cosine)
+       
         if self['cluster_function'] == 'linkage':
             self.add('cluster_method', 'single') # Linkage: single, complete, ward)
         else:
             self.add('cluster_method', 'single') # Linkage: single, complete, ward)
-        self.add('cluster_tmax_rel', 0.3)
+        
+        if self['cluster_function'] == 'linkage':
+            self.add('cluster_t', 0.3) # Linkage: single, complete, ward)
+        elif self['cluster_function'] == 'kmeans':
+            self.add('cluster_t', 4) # Linkage: single, complete, ward)
+        else:
+            self.add('cluster_t', 0.3)
+        
         self.add('cluster_n_min', 5) # minimum cluster size 
         
         # check kwargs
