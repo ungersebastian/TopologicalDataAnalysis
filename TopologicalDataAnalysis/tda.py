@@ -9,6 +9,7 @@ from sklearn.base import BaseEstimator, ClusterMixin, TransformerMixin
 from sklearn.utils.validation import _deprecate_positional_args
 from sklearn.utils import check_random_state
 import networkx as nx
+from collections import Counter
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
@@ -149,7 +150,6 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator, tda_child):
             elif np.sum(lens_select) > 1:
                 my_id = self.data_id[lens_select]
                 my_data = self.X[lens_select]
-                my_lens = values[lens_select]
                 
                 ## perform clustering
                 new_nodes = self.f_cluster.cluster.cluster(my_data)
@@ -207,4 +207,34 @@ class tda(TransformerMixin, ClusterMixin, BaseEstimator, tda_child):
         
         nx.draw_networkx_edges(self.topograph, self.pos_topo, alpha=0.4)
         plt.show()
-   
+    
+    def predict(self, data, method = 'relative'):
+        
+        cl = set(self.partition.values())
+        part = np.asarray(list(self.partition.values()))
+        ids = nx.get_node_attributes(self.topograph, 'ids')
+        id_topo = np.asarray(list(ids.keys()))
+        classes = []
+        for ic in cl:
+            nodes_c = id_topo[part==ic]
+            my_nodes = []
+            for node in nodes_c: my_nodes.append(list(ids[node])) # append all data points from each node
+            my_nodes = [item for row in my_nodes for item in row] # flatten this list
+            counts = np.zeros(len(data)) # empty array to count abundancies
+            counter = Counter(my_nodes) # count unique values
+            counts[list(counter.keys())] = list(counter.values()) 
+            classes.append(counts)
+        classes = np.array(classes)
+        csum = np.sum(classes, axis = 0)
+        csum[csum==0]=1 # in some cases no class is selected...  outliers?
+        classes = classes.T/csum[:,np.newaxis]
+        outliers = np.zeros(classes.shape[0])
+        if np.sum(csum==0) > 0:
+            outliers[csum == 0] = 1
+            classes = np.append(classes, outliers[:,np.newaxis], axis=1)
+        
+        if method == 'relative':
+            return classes
+        else:
+            return np.argmax(classes, axis = 1)
+         

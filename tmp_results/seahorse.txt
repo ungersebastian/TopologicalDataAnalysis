@@ -1,0 +1,5 @@
+my_tda = tda.tda(
+    lens_function = 'PCA', lens_axis = 0, lens_norm = 2,
+    resolution = 120, gain = 4,
+    cluster_function = 'kmeans', cluster_t = 6
+    )
